@@ -1,0 +1,1 @@
+export const API_URL = "https://scorely-server.onrender.com";

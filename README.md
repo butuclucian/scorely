@@ -137,7 +137,12 @@ The architecture allows additional leagues to be added in the future depending o
 - Render
 - GitHub
 
----
+```md
+### Testing & CI
+
+- Jest
+- Supertest
+- GitHub Actions
 
 ## 🏗️ Architecture
 
@@ -274,40 +279,43 @@ The production-style mobile application communicates with the cloud-hosted Score
 
 ## 🧪 Testing & QA
 
-Automated testing is planned as part of the continued development of Scorely.
+Scorely includes automated API testing using **Jest** and **Supertest**.
 
-The testing strategy will include:
+The current test suite covers:
 
-- REST API testing
-- Integration testing
-- End-to-end testing
-- Critical user flow validation
-- Regression testing
-- CI/CD integration
+- API health checks
+- Input validation
+- Match data transformation
+- Scheduled matches without scores
+- External API error handling
+- League validation
+- Standings season selection
+- Team and player search
+- Placeholder team filtering
+- Match statistics transformation
+- Regression testing for previously fixed bugs
 
-Example critical flows:
+The test suite currently contains **10 automated tests**.
+
+### CI Pipeline
+
+Automated tests are executed using **GitHub Actions** on:
+
+- every push to `main`
+- every pull request targeting `main`
+
+CI workflow:
 
 ```text
-Search
-→ Find Team
-→ Open Team Profile
-→ View Squad
-→ Open Player
-→ View Player Details
-```
-
-```text
-Matches
-→ Select League
-→ Open Match
-→ View Overview
-→ View Lineups
-→ View Statistics
-```
-
-The goal is to integrate automated tests into a CI/CD pipeline using GitHub Actions.
-
----
+Push / Pull Request
+        ↓
+GitHub Actions
+        ↓
+Install dependencies
+        ↓
+Run Jest test suite
+        ↓
+PASS / FAIL
 
 ## 🚀 Future Improvements
 

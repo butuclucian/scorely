@@ -256,20 +256,21 @@ The production-style mobile application communicates with the cloud-hosted Score
 
 ## 🖼️ Screenshots
 
-Screenshots of the application will be added here.
+## Screenshots
 
-Planned showcase:
+<p align="center">
+  <img src="./assets/screenshots/matches.png" alt="Matches screen" width="220" />
+  <img src="./assets/screenshots/standings.png" alt="Standings screen" width="220" />
+  <img src="./assets/screenshots/search.png" alt="Search screen" width="220" />
+  <img src="./assets/screenshots/favorites.png" alt="Favorites screen" width="220" />
+</p>
 
-- Matches
-- Match Details
-- Match Statistics
-- League Standings
-- Team Profile
-- Player Profile
-- Search
-- Favorites
-
----
+<p align="center">
+  <img src="./assets/screenshots/match-details.png" alt="Match details screen" width="220" />
+  <img src="./assets/screenshots/match-stats.png" alt="Match stats screen" width="220" />
+  <img src="./assets/screenshots/team-profile.png" alt="Team profile screen" width="220" />
+  <img src="./assets/screenshots/player-profile.png" alt="Player profile screen" width="220" />
+</p>
 
 ## 🧪 Testing & QA
 

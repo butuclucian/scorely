@@ -1,20 +1,28 @@
 # ⚽ Scorely
 
-**Scorely** is a full-stack football scores and statistics mobile application built with React Native, Expo and TypeScript.
+![Version](https://img.shields.io/badge/version-1.0.0-green)
+![React Native](https://img.shields.io/badge/React%20Native-Expo-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-Enabled-blue)
+![Node.js](https://img.shields.io/badge/Backend-Node.js-green)
+![Tests](https://img.shields.io/badge/API%20Tests-10%20Passing-success)
 
-The application provides football match data, league standings, detailed match statistics, lineups, team and player profiles, transfers, search functionality and persistent favorites through a custom Node.js REST API.
+**Scorely** is a full-stack football scores and statistics mobile application built with **React Native, Expo and TypeScript**.
+
+It provides football match data, league standings, detailed match statistics, lineups, team and player profiles, transfers, search functionality and persistent favorites through a custom **Node.js REST API**.
 
 ---
 
 ## 📱 About the Project
 
-Scorely was developed as a modern mobile football application inspired by platforms such as Flashscore and Sofascore.
+Scorely was developed as a modern football mobile application inspired by platforms such as Flashscore and Sofascore.
 
-The project focuses on building a complete mobile experience around football data while maintaining a clean and simple user interface.
+The goal of the project is to provide a clean and simple mobile experience for exploring football data while also demonstrating a complete full-stack architecture.
 
-The mobile application communicates with a custom REST API built with Node.js and Express. The backend retrieves football data from the Sportmonks Football API and exposes only the information required by the mobile client.
+The mobile application communicates with a custom REST API built with **Node.js and Express**.
 
-This architecture keeps external API credentials securely on the server instead of exposing them inside the mobile application.
+The backend retrieves football data from the **Sportmonks Football API**, transforms the responses and exposes only the data required by the mobile client.
+
+This architecture also keeps external API credentials securely on the server instead of exposing them inside the mobile application.
 
 ---
 
@@ -27,6 +35,7 @@ This architecture keeps external API credentials securely on the server instead 
 - View match status and scores
 - Open detailed match information
 - View recent team form
+- Navigate directly to team profiles
 
 ### 📊 Match Details
 
@@ -96,17 +105,18 @@ Search results provide direct navigation to the corresponding team or player pro
 
 - Add teams to favorites
 - Remove teams from favorites
-- Favorites stored locally using AsyncStorage
+- Store favorites locally using AsyncStorage
 - View upcoming matches for favorite teams
+- Persistent favorites between application sessions
 
 ### 🌍 Multiple Leagues
 
-Scorely currently supports football data from:
+Scorely currently supports:
 
 - Scottish Premiership
 - Danish Superliga
 
-The architecture allows additional leagues to be added in the future depending on API availability.
+The architecture allows additional leagues to be integrated in the future depending on API availability.
 
 ---
 
@@ -131,18 +141,21 @@ The architecture allows additional leagues to be added in the future depending o
 
 - Sportmonks Football API
 
+### Testing & QA
+
+- Jest
+- Supertest
+- API mocking
+- Regression testing
+- GitHub Actions
+
 ### Deployment
 
 - Expo EAS Build
 - Render
 - GitHub
 
-```md
-### Testing & CI
-
-- Jest
-- Supertest
-- GitHub Actions
+---
 
 ## 🏗️ Architecture
 
@@ -216,31 +229,40 @@ src/
 
 ## 🌐 Backend
 
-Scorely uses a separate Node.js and Express backend.
+Scorely uses a separate **Node.js + Express** backend.
 
 The backend acts as an intermediary between the mobile application and the Sportmonks Football API.
 
-This provides several advantages:
+### Responsibilities
 
-- External API credentials are not exposed in the mobile application
-- API responses can be transformed before reaching the client
-- Mobile and backend development remain separated
-- Backend logic can be updated independently
-- The architecture can support additional data sources in the future
+- Protect external API credentials
+- Fetch football data
+- Transform external API responses
+- Provide a simplified REST API for the mobile client
+- Handle external API errors
+- Centralize football data logic
+
+### Backend Repository
+
+[Scorely Server](https://github.com/lucianbutuc16/scorely-server)
+
+### Live API
+
+[https://scorely-server.onrender.com](https://scorely-server.onrender.com)
 
 ---
 
 ## 🔐 Security
 
-Sensitive credentials such as the Sportmonks API token are never committed to GitHub.
+Sensitive credentials such as the Sportmonks API token are never stored inside the mobile application or committed to GitHub.
 
-The token is stored using environment variables on the backend:
+The backend uses environment variables:
 
 ```text
 SPORTMONKS_API_TOKEN
 ```
 
-The mobile application communicates only with the deployed Scorely API.
+The mobile application communicates only with the deployed Scorely REST API.
 
 ---
 
@@ -248,20 +270,18 @@ The mobile application communicates only with the deployed Scorely API.
 
 Scorely has been successfully built as a standalone Android application using **Expo EAS Build**.
 
-The application can run independently without:
+The installed application runs independently without:
 
 - Expo Go
-- A local Node.js server
+- A local Node.js backend
 - A development computer
 - A local network connection to the backend
 
-The production-style mobile application communicates with the cloud-hosted Scorely REST API.
+The Android application communicates directly with the cloud-hosted Scorely API.
 
 ---
 
 ## 🖼️ Screenshots
-
-## Screenshots
 
 <p align="center">
   <img src="./assets/screenshots/matches.png" alt="Matches screen" width="220" />
@@ -272,73 +292,123 @@ The production-style mobile application communicates with the cloud-hosted Score
 
 <p align="center">
   <img src="./assets/screenshots/match-details.png" alt="Match details screen" width="220" />
-  <img src="./assets/screenshots/match-stats.png" alt="Match stats screen" width="220" />
+  <img src="./assets/screenshots/match-stats.png" alt="Match statistics screen" width="220" />
   <img src="./assets/screenshots/team-profile.png" alt="Team profile screen" width="220" />
   <img src="./assets/screenshots/player-profile.png" alt="Player profile screen" width="220" />
 </p>
 
+---
+
 ## 🧪 Testing & QA
 
-Scorely includes automated API testing using **Jest** and **Supertest**.
+Scorely includes automated backend API testing using **Jest** and **Supertest**.
 
-The current test suite covers:
+The current test suite contains **10 automated tests**.
+
+### Test Coverage
+
+The test suite currently covers:
 
 - API health checks
 - Input validation
-- Match data transformation
+- Match response transformation
+- Match score transformation
 - Scheduled matches without scores
 - External API error handling
 - League validation
-- Standings season selection
+- Correct season selection
 - Team and player search
 - Placeholder team filtering
 - Match statistics transformation
 - Regression testing for previously fixed bugs
 
-The test suite currently contains **10 automated tests**.
+### Mocking External APIs
 
-### CI Pipeline
+Sportmonks requests are mocked during automated testing.
 
-Automated tests are executed using **GitHub Actions** on:
+This allows the backend logic to be tested without:
 
-- every push to `main`
-- every pull request targeting `main`
+- Depending on internet connectivity
+- Consuming Sportmonks API requests
+- Depending on external API availability
+- Producing inconsistent test results
 
-CI workflow:
+Example:
+
+```text
+Mock Sportmonks Response
+          ↓
+    Scorely Backend
+          ↓
+ Transform / Validate
+          ↓
+     Jest Assertion
+```
+
+### Regression Testing
+
+Automated tests also protect previously fixed functionality.
+
+For example, a regression test validates the transformation of match statistics:
+
+```text
+Sportmonks
+
+type.code
+type.name
+data.value
+participant_id
+
+        ↓
+
+Scorely API
+
+code
+name
+value
+participantId
+```
+
+This protects the match statistics feature from accidentally breaking after future backend changes.
+
+---
+
+## 🔄 Continuous Integration
+
+Scorely uses **GitHub Actions** for continuous integration.
+
+The automated test suite runs on:
+
+- Every push to `main`
+- Every pull request targeting `main`
+
+CI pipeline:
 
 ```text
 Push / Pull Request
         ↓
 GitHub Actions
         ↓
-Install dependencies
+Checkout Repository
         ↓
-Run Jest test suite
+Setup Node.js
         ↓
-PASS / FAIL
+Install Dependencies
+        ↓
+Run Jest Test Suite
+        ↓
+PASS ✅ / FAIL ❌
+```
 
-## 🚀 Future Improvements
-
-Planned improvements include:
-
-- Head-to-head match history
-- Additional football leagues
-- Improved dark mode
-- Push notifications
-- Match notifications
-- Enhanced loading and error states
-- Additional match statistics
-- Automated testing
-- CI/CD pipeline
-- UI/UX improvements
+This allows regressions and backend errors to be detected automatically before changes are merged or deployed.
 
 ---
 
-## ⚙️ Running the Project Locally
+## ⚙️ Running the Mobile App Locally
 
 ### Requirements
 
-Make sure you have installed:
+Install:
 
 - Node.js
 - npm
@@ -368,17 +438,92 @@ Start Expo:
 npx expo start
 ```
 
-The application can then be opened using a supported development environment or device.
+For tunnel mode:
+
+```bash
+npx expo start --tunnel
+```
+
+---
+
+## ⚙️ Running the Backend Locally
+
+Clone the backend repository:
+
+```bash
+git clone https://github.com/lucianbutuc16/scorely-server.git
+```
+
+Enter the project:
+
+```bash
+cd scorely-server
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create a `.env` file:
+
+```env
+SPORTMONKS_API_TOKEN=your_api_token
+PORT=3000
+```
+
+Start the backend:
+
+```bash
+npm start
+```
+
+Run the automated tests:
+
+```bash
+npm test
+```
+
+---
+
+## 🚀 Future Improvements
+
+Planned improvements include:
+
+- Head-to-head match history
+- Additional football leagues
+- Improved dark mode
+- Push notifications
+- Match notifications
+- Enhanced loading states
+- Enhanced error states
+- Additional match statistics
+- Expanded automated test coverage
+- Mobile end-to-end testing
+- UI/UX improvements
+- Performance improvements
 
 ---
 
 ## 📌 Project Status
 
-**Version:** 1.0.0
+**Version:** `1.0.0`
 
-Scorely is currently under active development.
+### Current status
 
-The core mobile application, cloud backend and standalone Android build are functional.
+- ✅ Mobile application functional
+- ✅ Cloud backend deployed
+- ✅ Standalone Android build functional
+- ✅ Multiple leagues supported
+- ✅ Team and player search
+- ✅ Favorites
+- ✅ Match details and statistics
+- ✅ Team profiles
+- ✅ Player profiles
+- ✅ Automated API testing
+- ✅ GitHub Actions CI
+- 🚧 Continued development
 
 ---
 
@@ -388,14 +533,19 @@ Scorely was built to explore and demonstrate practical concepts in:
 
 - Mobile application development
 - Full-stack software architecture
-- REST API integration
+- React Native development
 - TypeScript development
+- REST API design and integration
+- External API integration
 - State management
 - Persistent local storage
 - Cloud deployment
 - API security
-- Software testing
-- CI/CD
+- Automated software testing
+- API testing
+- Regression testing
+- Mocking external dependencies
+- Continuous Integration
 
 ---
 
@@ -403,13 +553,14 @@ Scorely was built to explore and demonstrate practical concepts in:
 
 **Lucian Butuc**
 
-Master's student in Information Technologies with an interest in Software Engineering and QA/Test Automation.
+Master's student in Information Technologies with an interest in **Software Engineering and QA/Test Automation**.
 
-Areas of interest:
+### Areas of Interest
 
 - Software Engineering
 - QA & Test Automation
 - Web and Mobile Testing
 - REST API Testing
-- TypeScript / JavaScript
+- JavaScript / TypeScript
+- Test Automation
 - CI/CD
